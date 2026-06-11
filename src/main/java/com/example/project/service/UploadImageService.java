@@ -1,6 +1,6 @@
 package com.example.project.service;
 
-import com.example.project.exception.ImageExtentionInvalidExeption;
+import com.example.project.exception.ImageExtensionInvalidException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +23,7 @@ public class UploadImageService {
         String fileName = file.getOriginalFilename();
         String fileExtension = fileName.substring(fileName.lastIndexOf("."));
         if (!fileExtension.equals(".jpg") && !fileExtension.equals(".png") && !fileExtension.equals(".jpeg")) {
-            throw new ImageExtentionInvalidExeption("Ảnh không đúng định dạng");
+            throw new ImageExtensionInvalidException("Ảnh không đúng định dạng");
         }
         return true;
     }

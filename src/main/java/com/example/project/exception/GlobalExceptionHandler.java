@@ -64,15 +64,15 @@ public class GlobalExceptionHandler {
         ), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ImageExtentionInvalidExeption.class)
-    public ResponseEntity<ApiDataResponse<?>> handleImageExtentionInvalidExeption(ImageExtentionInvalidExeption exception) {
+    @ExceptionHandler(ImageExtensionInvalidException.class)
+    public ResponseEntity<ApiDataResponse<?>> handleImageExtensionInvalidException(ImageExtensionInvalidException exception) {
         return new ResponseEntity<>(new ApiDataResponse<>(
                 false,
                 exception.getMessage(),
                 null,
                 null,
-                HttpStatus.NOT_FOUND
-        ), HttpStatus.NOT_FOUND);
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
@@ -87,7 +87,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PasswordIncorrectException.class)
-    public ResponseEntity<ApiDataResponse<?>> handleUnauthorizedException(PasswordIncorrectException exception) {
+    public ResponseEntity<ApiDataResponse<?>> handlePasswordIncorrectException(PasswordIncorrectException exception) {
         return new ResponseEntity<>(new ApiDataResponse<>(
                 false,
                 exception.getMessage(),
@@ -98,7 +98,29 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExistException.class)
-    public ResponseEntity<ApiDataResponse<?>> handleUnauthorizedException(ExistException exception) {
+    public ResponseEntity<ApiDataResponse<?>> handleExistException(ExistException exception) {
+        return new ResponseEntity<>(new ApiDataResponse<>(
+                false,
+                exception.getMessage(),
+                null,
+                null,
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StartTimeAfterEndTimeException.class)
+    public ResponseEntity<ApiDataResponse<?>> handleStartTimeAfterEndTimeException(StartTimeAfterEndTimeException exception) {
+        return new ResponseEntity<>(new ApiDataResponse<>(
+                false,
+                exception.getMessage(),
+                null,
+                null,
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TimeDurationHaveBookingException.class)
+    public ResponseEntity<ApiDataResponse<?>> handleTimeDurationHaveBookingException(TimeDurationHaveBookingException exception) {
         return new ResponseEntity<>(new ApiDataResponse<>(
                 false,
                 exception.getMessage(),

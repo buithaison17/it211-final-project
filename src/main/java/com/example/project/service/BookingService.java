@@ -2,6 +2,8 @@ package com.example.project.service;
 
 import com.example.project.enums.BookingStatus;
 import com.example.project.exception.NotFoundException;
+import com.example.project.exception.StartTimeAfterEndTimeException;
+import com.example.project.exception.TimeDurationHaveBookingException;
 import com.example.project.model.dto.request.BookingRequest;
 import com.example.project.model.dto.request.BookingStatusRequest;
 import com.example.project.model.entity.Booking;
@@ -23,10 +25,15 @@ public class BookingService {
     private final CourtService courtService;
 
     public Booking bookCourt(Long id, BookingRequest request) {
+        // Kiểm tra ngày bắt đầu phải trước ngày kết thúc
+        if (request.getStartTime().isAfter(request.getEndTime())) {
+            throw new StartTimeAfterEndTimeException("Thời gian bắt đầu phải trước thời gian kết thúc");
+        }
         // Kiểm tra trong khoảng thời gian này đã có người đặt chưa
         if (bookingRepository.isDuplicateBooking(id, request.getStartTime(), request.getEndTime(), BookingStatus.CANCELLED)) {
-            throw new RuntimeException("Khoảng thời gian này đã có người đặt");
+            throw new TimeDurationHaveBookingException("Khoảng thời gian này đã có người đặt");
         }
+        // Lấy thông tin sân
         Court court = courtService.findById(id);
         // Lấy người dùng hiện tại
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
