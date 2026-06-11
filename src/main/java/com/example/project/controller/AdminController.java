@@ -30,7 +30,7 @@ public class AdminController {
 
     // Lấy danh sách
     @GetMapping("/users")
-    public ResponseEntity<ApiDataResponse<Page<User>>> getListUser(
+    public ResponseEntity<ApiDataResponse<Page<UserProjectionDTO>>> getListUser(
             @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestParam(value = "keyword", defaultValue = "") String keyword

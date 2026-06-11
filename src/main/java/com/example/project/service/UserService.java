@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     // Lấy danh sách người dùng phân trang + tìm kiếm
-    public Page<User> getListUser(Integer currentPage, Integer pageSize, String keyword) {
-        Sort sort = Sort.by(keyword);
-        Pageable pageable = PageRequest.of(currentPage, pageSize, sort);
-        return userRepository.findAll(pageable);
+    public Page<UserProjectionDTO> getListUser(Integer currentPage, Integer pageSize, String keyword) {
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        return userRepository.findByKeyword(keyword, pageable);
     }
 
     public User findById(Long id) {
