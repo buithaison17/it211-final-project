@@ -17,6 +17,9 @@ public class UploadImageService {
     private String imageUploadDir;
 
     public boolean verifyImage(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return false;
+        }
         String fileName = file.getOriginalFilename();
         String fileExtension = fileName.substring(fileName.lastIndexOf("."));
         if (!fileExtension.equals(".jpg") && !fileExtension.equals(".png") && !fileExtension.equals(".jpeg")) {
@@ -26,10 +29,7 @@ public class UploadImageService {
     }
 
     public String uploadImage(MultipartFile file) {
-        if (file == null || file.isEmpty()) {
-            return null;
-        }
-        // Kiểm tra định dạng ảnh
+        // Kiểm tra ảnh
         if (!verifyImage(file)) {
             return null;
         }
