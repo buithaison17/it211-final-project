@@ -9,7 +9,6 @@ import com.example.project.model.entity.Court;
 import com.example.project.model.entity.User;
 import com.example.project.repository.BookingRepository;
 import com.example.project.security.principal.UserPrincipal;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

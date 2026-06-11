@@ -20,8 +20,8 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 null,
                 null,
-                HttpStatus.NOT_FOUND
-        ), HttpStatus.NOT_FOUND);
+                HttpStatus.BAD_REQUEST
+        ), HttpStatus.BAD_REQUEST);
     }
 
     // Lỗi khi không tìm thấy

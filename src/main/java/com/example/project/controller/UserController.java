@@ -42,6 +42,4 @@ public class UserController {
                 HttpStatus.OK
         ), HttpStatus.OK);
     }
-
-    //
 }

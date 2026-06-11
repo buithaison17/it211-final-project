@@ -27,6 +27,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         Map<String, Object> errors = new HashMap<>();
         errors.put("status", 401);
         errors.put("message", "Unauthorized");
-        objectMapper.writeValue(response.getWriter(), errors);
+        response.getWriter().write(objectMapper.writeValueAsString(errors));
     }
 }
