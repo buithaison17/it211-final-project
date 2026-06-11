@@ -38,7 +38,6 @@ public class UserService {
         return UserProjectionDTO.builder()
                 .fullName(user.getFullName())
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .phone(user.getPhone())
                 .build();
     }

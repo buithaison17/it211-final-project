@@ -2,7 +2,6 @@ package com.example.project.service;
 
 import com.example.project.exception.ExistException;
 import com.example.project.exception.PasswordIncorrectException;
-import com.example.project.exception.UnauthorizedException;
 import com.example.project.model.dto.request.ChangePasswordRequest;
 import com.example.project.model.dto.request.UserLogin;
 import com.example.project.model.dto.request.UserRegister;
