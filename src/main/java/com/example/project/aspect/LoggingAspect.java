@@ -21,7 +21,7 @@ public class LoggingAspect {
     )
     public void bookingAspectReturn(JoinPoint joinPoint, Object result) {
         Booking booking = (Booking) result;
-        log.info("Người dùng {} đặt sân {} thời gian {} - {}",
+        log.info("[AUDIT - SUCCESS] Khách hàng {} đặt thành công Sân {} vào khoảng thời gian {} - {}",
                 booking.getUser().getId(),
                 booking.getCourt().getId(),
                 booking.getStartTime(),
@@ -35,8 +35,9 @@ public class LoggingAspect {
     )
     public void bookingThrow(JoinPoint joinPoint, Exception exception) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.error("Người dùng {} không thể đặt sân vì {}",
+        log.error("[AUDIT - FAILED] Khách hàng {} cố gắng đặt Sân {} nhưng thất bại do {}",
                 userPrincipal.getUser().getId(),
+                joinPoint.getArgs()[0],
                 exception.getMessage()
         );
     }
