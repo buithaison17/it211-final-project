@@ -5,6 +5,7 @@ import com.example.project.model.dto.response.ApiDataResponse;
 import com.example.project.model.entity.Booking;
 import com.example.project.service.BookingService;
 import com.example.project.service.CourtService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,10 @@ public class UserController {
     private final BookingService bookingService;
 
     @PostMapping("/courts/{id}/booked")
-    public ResponseEntity<ApiDataResponse<Booking>> bookCourt(@PathVariable Long id, @RequestBody BookingRequest request) {
+    public ResponseEntity<ApiDataResponse<Booking>> bookCourt(
+            @PathVariable Long id,
+            @Valid @RequestBody BookingRequest request
+    ) {
         return new ResponseEntity<>(new ApiDataResponse<>(
                 true,
                 "Đặt sân thành công",
