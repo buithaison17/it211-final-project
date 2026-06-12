@@ -1,0 +1,11 @@
+2026-06-12 20:29:47 [restartedMain] INFO  c.example.project.ProjectApplication - Starting ProjectApplication using Java 17.0.18 with PID 4896 (C:\Users\ADMIN\Desktop\project\build\classes\java\main started by ADMIN in C:\Users\ADMIN\Desktop\project)
+2026-06-12 20:29:47 [restartedMain] INFO  c.example.project.ProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-12 20:30:04 [restartedMain] INFO  c.example.project.ProjectApplication - Started ProjectApplication in 18.107 seconds (process running for 20.042)
+2026-06-12 20:30:15 [restartedMain] INFO  c.example.project.ProjectApplication - Starting ProjectApplication using Java 17.0.18 with PID 9412 (C:\Users\ADMIN\Desktop\project\build\classes\java\main started by ADMIN in C:\Users\ADMIN\Desktop\project)
+2026-06-12 20:30:15 [restartedMain] INFO  c.example.project.ProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-12 20:30:36 [restartedMain] INFO  c.example.project.ProjectApplication - Started ProjectApplication in 22.77 seconds (process running for 24.87)
+2026-06-12 20:32:09 [restartedMain] INFO  c.example.project.ProjectApplication - Starting ProjectApplication using Java 17.0.18 with PID 6344 (C:\Users\ADMIN\Desktop\project\build\classes\java\main started by ADMIN in C:\Users\ADMIN\Desktop\project)
+2026-06-12 20:32:09 [restartedMain] INFO  c.example.project.ProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-12 20:32:28 [restartedMain] INFO  c.example.project.ProjectApplication - Started ProjectApplication in 20.719 seconds (process running for 22.524)
+2026-06-12 20:32:43 [http-nio-8080-exec-3] ERROR c.e.project.aspect.LoggingAspect - Người dùng 3 không thể đặt sân vì Khoảng thời gian này đã có người đặt
+2026-06-12 20:33:06 [http-nio-8080-exec-5] INFO  c.e.project.aspect.LoggingAspect - Người dùng 3 đặt sân 1 thời gian 2026-06-13T12:00 - 2026-06-13T13:00

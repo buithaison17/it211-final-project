@@ -62,4 +62,28 @@ public class AuthController {
                 HttpStatus.OK
         ), HttpStatus.OK);
     }
+
+    @PostMapping("/forgetPassword")
+    public ResponseEntity<ApiDataResponse<?>> forgetPassword(@RequestBody ForgetPasswordRequest request) {
+        authService.forgetPassword(request);
+        return new ResponseEntity<>(new ApiDataResponse<>(
+                true,
+                "Đã gửi OTP về email",
+                null,
+                null,
+                HttpStatus.OK
+        ), HttpStatus.OK);
+    }
+
+    @PostMapping("/verifyOtp")
+    public ResponseEntity<ApiDataResponse<?>> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        authService.verifyOtp(request);
+        return new ResponseEntity<>(new ApiDataResponse<>(
+                true,
+                "Xác nhận OTP thành công",
+                null,
+                null,
+                HttpStatus.OK
+        ), HttpStatus.OK);
+    }
 }

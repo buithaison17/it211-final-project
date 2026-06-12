@@ -19,8 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UploadImageService {
     private final Cloudinary cloudinary;
-    @Value("${imageUploadDir}")
-    private String imageUploadDir;
 
     public boolean verifyImage(MultipartFile file) {
         if (file == null || file.isEmpty()) {

@@ -1,10 +1,11 @@
 package com.example.project.service;
 
+import com.cloudinary.api.exceptions.NotFound;
 import com.example.project.exception.ExistException;
+import com.example.project.exception.NotFoundException;
+import com.example.project.exception.NotMatchOTPException;
 import com.example.project.exception.PasswordIncorrectException;
-import com.example.project.model.dto.request.ChangePasswordRequest;
-import com.example.project.model.dto.request.UserLogin;
-import com.example.project.model.dto.request.UserRegister;
+import com.example.project.model.dto.request.*;
 import com.example.project.model.dto.response.JwtResponse;
 import com.example.project.model.entity.RefreshToken;
 import com.example.project.model.entity.Role;
@@ -23,6 +24,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -36,6 +39,8 @@ public class AuthService {
     private final HttpServletRequest httpServletRequest;
     private final RedisTemplate<String, String> redisTemplate;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserService userService;
+    private final EmailService emailService;
 
     // Đăng kí (user tự đăng ký)
     public User register(UserRegister userRegister) {
@@ -76,7 +81,7 @@ public class AuthService {
         String username = jwtProvider.getUsernameFromToken(accessToken);
         // Thu hồi refresh token và lưu access token vào redis
         refreshToken.setRevoked(true);
-        redisTemplate.opsForValue().set(accessToken, username);
+        redisTemplate.opsForValue().set(accessToken, username, Duration.ofMillis(300000));
         // Lưu lại
         refreshTokenRepository.save(refreshToken);
     }
@@ -98,5 +103,40 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         // Lưu lại
         return userRepository.save(user);
+    }
+
+    // Quên mật khẩu
+    public void forgetPassword(ForgetPasswordRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isEmpty()) {
+            throw new NotFoundException("Email không tồn tại");
+        }
+        // Tạo mã OTP lưu trong redis và gửi mail cho người dùng
+        String otp = String.valueOf(100000 + new Random().nextInt(900000));
+        // OTP có hiệu lực 10p
+        redisTemplate.opsForValue().set(request.getEmail() + "otp", otp, Duration.ofMinutes(10));
+        // Gửi otp cho người dùng
+        emailService.sendEmail(request.getEmail(), "Quên mật khẩu", "Mã OTP của bạn là: " + otp);
+    }
+
+    // Xác nhận khi email khi quên mật khẩu
+    public void verifyOtp(VerifyOtpRequest request) {
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+        // Kiểm tra email
+        if (user == null) {
+            throw new NotFoundException("Email không tồn tại");
+        }
+        // Lấy otp có trong redis
+        String otp = redisTemplate.opsForValue().get(request.getEmail() + "otp");
+        // Kiểm tra
+        if (!request.getOtp().equals(otp)) {
+            throw new NotMatchOTPException("Mã OTP không chính xác");
+        }
+        // Xác thực thành công cấp lại mật khẩu mới và gửi về mail
+        String password = "12345678";
+        user.setPassword(passwordEncoder.encode(password));
+        // Lưu lại
+        userRepository.save(user);
+        // Gửi mail
+        emailService.sendEmail(request.getEmail(), "Cấp lại mật khẩu", "Mật khẩu mới của bạn là: " + password);
     }
 }
